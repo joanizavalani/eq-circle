@@ -1,72 +1,55 @@
 package org.joza.repository;
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.joza.entities.CircleCoordinates;
 
 import java.util.List;
-import java.util.UUID;
 
 @AllArgsConstructor
 public class CoordinatesRepository {
 
     private final Session session;
-    private Transaction transaction;
 
-    // method connects to createCircle() in consoleUI
-    public void addCoordinates(CircleCoordinates coordinates){
+    public void addCoordinates(CircleCoordinates coordinates) {
+        Transaction transaction = null;
 
         try {
-
-            UUID id = coordinates.getId();
-            double centerX = coordinates.getCenterX();
-            double centerY = coordinates.getCenterY();
-            double pointX = coordinates.getPointX();
-            double pointY = coordinates.getPointY();
-
+            transaction = session.beginTransaction();
             session.save(coordinates);
             transaction.commit();
 
         } catch (Exception e) {
-
-            if (transaction != null) { transaction.rollback(); }
-            e.printStackTrace();
-
-        } finally {
-
-            if (session != null) {
-                session.close();
+            if (transaction != null) {
+                transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 
     // method connects to showAllCircles() in consoleUI
-    public List<CircleCoordinates> getAllCircles(){
-
+    public List<CircleCoordinates> getAllCircles() {
+        Transaction transaction = null;
         try {
-
+            transaction = session.beginTransaction();
             String query = "select c from CircleCoordinates c";
-
             Query<CircleCoordinates> allCircles = session.createQuery(query, CircleCoordinates.class);
-
-            transaction.commit();
-
-            return allCircles.getResultList();
-
+            List<CircleCoordinates> result = allCircles.getResultList();
+            transaction.commit(); // Commit transaction only if everything is successful
+            return result;
         } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
             e.printStackTrace();
             return null;
         }
     }
-
-
-
-
-
 }
+
+
+
+
+

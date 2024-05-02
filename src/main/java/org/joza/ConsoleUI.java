@@ -118,7 +118,7 @@ public class ConsoleUI {
     // option 1
     private void createCircle(){
 
-        System.out.println("~~~ CREATE A NEW CIRCLE~~\n");
+        System.out.println("\n~~~ CREATE A NEW CIRCLE~~\n");
 
         System.out.println("Insert X coordinate for the center of the circle:");
         double center_x = scanner.nextDouble();
@@ -168,10 +168,6 @@ public class ConsoleUI {
 
         System.out.println("Enter location ID:");
         UUID id = UUID.fromString(scanner.nextLine());
-
-
-
-
 
     }
 

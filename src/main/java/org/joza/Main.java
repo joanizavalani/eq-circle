@@ -15,15 +15,16 @@ public class Main {
         // frameworks: Hibernate
 
         Session session = HibernateUtility.getSessionFactory().openSession();
-        Transaction transaction = session.beginTransaction();
 
-        CoordinatesRepository coordinatesRepository = new CoordinatesRepository(session, transaction);
+        CoordinatesRepository coordinatesRepository = new CoordinatesRepository(session);
 
         CoordinatesService coordinatesService = new CoordinatesService(coordinatesRepository);
         DataService dataService = new DataService();
 
         ConsoleUI consoleUI = new ConsoleUI(coordinatesService, dataService);
         consoleUI.runMenu();
+
+        session.close();
     }
 
 
