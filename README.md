@@ -1,0 +1,1 @@
+Simple circle calculator app: stores data (coordinates, radius) in a mySQL database using the Hibernate framework. User is able to get radius, area and perimeter of circle through a Console User Interface. Other functionalities: move a circle, resize radius, etc. Still in progress.
