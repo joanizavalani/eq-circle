@@ -35,7 +35,4 @@ public class CircleCoordinates {
     @Column(name = "point_y")
     private double pointY;
 
-
-
-
 }

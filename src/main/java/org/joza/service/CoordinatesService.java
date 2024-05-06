@@ -5,6 +5,7 @@ import org.joza.entities.CircleCoordinates;
 import org.joza.repository.CoordinatesRepository;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 
@@ -25,5 +26,10 @@ public class CoordinatesService {
     public List<CircleCoordinates> getAllCircles(){
 
         return coordinatesRepository.getAllCircles();
+    }
+
+    public CircleCoordinates getCoordinates(UUID id){
+
+        return coordinatesRepository.getCoordinates(id);
     }
 }

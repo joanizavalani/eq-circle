@@ -20,6 +20,8 @@ public class ConsoleUI {
 
     private final Scanner scanner;
 
+    // constructor
+
     public ConsoleUI(CoordinatesService coordinatesService, DataService dataService){
 
         this.coordinatesService = coordinatesService;
@@ -118,7 +120,7 @@ public class ConsoleUI {
     // option 1
     private void createCircle(){
 
-        System.out.println("\n~~~ CREATE A NEW CIRCLE~~\n");
+        System.out.println("\n~~~ CREATE A NEW CIRCLE~~~\n");
 
         System.out.println("Insert X coordinate for the center of the circle:");
         double center_x = scanner.nextDouble();
@@ -133,7 +135,6 @@ public class ConsoleUI {
         double point_y = scanner.nextDouble();
 
         UUID id = UUID.randomUUID();
-        System.out.println("Your ID for this circle is: "+ id);
 
         CircleCoordinates coordinates = new CircleCoordinates();
 
@@ -154,20 +155,35 @@ public class ConsoleUI {
         for(CircleCoordinates coordinates : coordinatesService.getAllCircles()){
 
             System.out.println
-                (coordinates.getId() +" --> CENTER c("+ coordinates.getCenterX() +", "+ coordinates.getCenterY()
-                +") POINT p("+ coordinates.getPointX() +", "+ coordinates.getPointY() +")");
+                (coordinates.getId() +" --> center C("+ coordinates.getCenterX() +", "+ coordinates.getCenterY()
+                +") point P("+ coordinates.getPointX() +", "+ coordinates.getPointY() +")");
         }
 
-        System.out.println("\nThese are all the circles saved in your database.\n");
+        System.out.println("\nThese are all the circles saved in the database.\n");
 
     }
 
-    private void getCoordinatesOfCircle(){
+    private void getCoordinatesOfCircle() {
 
-        System.out.println("GET CIRCLE COORDINATES\n");
+        System.out.println("\n~~~ GET CIRCLE COORDINATES ~~~\n");
 
-        System.out.println("Enter location ID:");
-        UUID id = UUID.fromString(scanner.nextLine());
+        System.out.println("Enter circle ID:");
+
+        String idFromString = scanner.next();
+
+        UUID id;
+
+        try {
+            id = UUID.fromString(idFromString);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+            return;
+        }
+
+        CircleCoordinates coordinates = coordinatesService.getCoordinates(id);
+
+        System.out.println("circle coordinates: center C(" + coordinates.getCenterX() + ", " +
+                coordinates.getCenterY() + "); point P(" + coordinates.getPointX() + ", " + coordinates.getPointY() + ")");
 
     }
 
@@ -207,7 +223,6 @@ public class ConsoleUI {
     }
 
     private void deleteCircle(){
-
 
         System.out.println("DELETE A CIRCLE\n");
 

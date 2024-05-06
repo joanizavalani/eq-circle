@@ -7,6 +7,7 @@ import org.hibernate.query.Query;
 import org.joza.entities.CircleCoordinates;
 
 import java.util.List;
+import java.util.UUID;
 
 @AllArgsConstructor
 public class CoordinatesRepository {
@@ -14,6 +15,7 @@ public class CoordinatesRepository {
     private final Session session;
 
     public void addCoordinates(CircleCoordinates coordinates) {
+
         Transaction transaction = null;
 
         try {
@@ -31,13 +33,15 @@ public class CoordinatesRepository {
 
     // method connects to showAllCircles() in consoleUI
     public List<CircleCoordinates> getAllCircles() {
+
         Transaction transaction = null;
+
         try {
             transaction = session.beginTransaction();
             String query = "select c from CircleCoordinates c";
             Query<CircleCoordinates> allCircles = session.createQuery(query, CircleCoordinates.class);
             List<CircleCoordinates> result = allCircles.getResultList();
-            transaction.commit(); // Commit transaction only if everything is successful
+            transaction.commit();
             return result;
         } catch (Exception e) {
             if (transaction != null) {
@@ -46,6 +50,34 @@ public class CoordinatesRepository {
             e.printStackTrace();
             return null;
         }
+    }
+
+    // method to get coordinates
+    public CircleCoordinates getCoordinates(UUID id) {
+
+        Transaction transaction = null;
+
+        CircleCoordinates coordinates = session.get(CircleCoordinates.class, id);
+
+        if (coordinates.getId() != null) {
+
+            try {
+                transaction = session.beginTransaction();
+                session.persist(coordinates);
+                transaction.commit();
+
+            } catch (Exception e) {
+                transaction.rollback();
+                e.printStackTrace();
+            }
+
+
+        } else {
+            throw new RuntimeException("Coordinates not found");
+        }
+
+
+        return coordinates;
     }
 }
 
