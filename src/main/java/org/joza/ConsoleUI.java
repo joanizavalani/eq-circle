@@ -1,6 +1,7 @@
 package org.joza;
 
 import org.joza.entities.CircleCoordinates;
+import org.joza.entities.CircleData;
 import org.joza.service.CoordinatesService;
 import org.joza.service.DataService;
 
@@ -148,6 +149,29 @@ public class ConsoleUI {
 
         System.out.println("\nCircle was saved to database.");
 
+        // after adding a new circle in the circle_coordinates table, the circle_data table needs to be filled too
+
+        CircleData data = new CircleData();
+
+        UUID dataId = UUID.randomUUID();
+
+        // formula for radius, area & perimeter
+
+        double radius = Math.sqrt( Math.pow((coordinates.getCenterX() - coordinates.getPointX()), 2)
+                + Math.pow((coordinates.getCenterY() - coordinates.getPointY()), 2) ); // SQRT[(x-x0)^2 + (y-y0)^2)]
+
+        double area = Math.PI * Math.pow(radius, 2);
+
+        double perimeter = Math.PI * 2 * radius;
+
+        data.setId(dataId);
+        data.setCoordinates(coordinates);
+        data.setRadius(radius);
+        data.setArea(area);
+        data.setPerimeter(perimeter);
+
+        dataService.addAllData(data);
+
     }
 
     private void showAllCircles(){
@@ -190,6 +214,20 @@ public class ConsoleUI {
     private void getRadiusOfCircle(){
 
         System.out.println("GET CIRCLE RADIUS\n");
+
+        System.out.println("Enter circle ID:");
+
+        String idFromString = scanner.next();
+
+        UUID id;
+
+        try {
+            id = UUID.fromString(idFromString);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+            return;
+        }
+
     }
 
     private void getAreaOfCircle(){

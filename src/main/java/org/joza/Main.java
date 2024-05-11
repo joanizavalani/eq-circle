@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.joza.configuration.HibernateUtility;
 import org.joza.repository.CoordinatesRepository;
+import org.joza.repository.DataRepository;
 import org.joza.service.CoordinatesService;
 import org.joza.service.DataService;
 
@@ -18,9 +19,10 @@ public class Main {
         Session session = HibernateUtility.getSessionFactory().openSession();
 
         CoordinatesRepository coordinatesRepository = new CoordinatesRepository(session);
+        DataRepository dataRepository = new DataRepository(session);
 
         CoordinatesService coordinatesService = new CoordinatesService(coordinatesRepository);
-        DataService dataService = new DataService();
+        DataService dataService = new DataService(dataRepository);
 
         ConsoleUI consoleUI = new ConsoleUI(coordinatesService, dataService);
         consoleUI.runMenu();

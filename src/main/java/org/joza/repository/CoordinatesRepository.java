@@ -10,11 +10,12 @@ import java.util.List;
 import java.util.UUID;
 
 @AllArgsConstructor
+
 public class CoordinatesRepository {
 
     private final Session session;
 
-    public void addCoordinates(CircleCoordinates coordinates) {
+    public void addCoordinates(CircleCoordinates coordinates){
 
         Transaction transaction = null;
 
@@ -32,7 +33,7 @@ public class CoordinatesRepository {
     }
 
     // method connects to showAllCircles() in consoleUI
-    public List<CircleCoordinates> getAllCircles() {
+    public List<CircleCoordinates> getAllCircles(){
 
         Transaction transaction = null;
 
