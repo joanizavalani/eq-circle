@@ -137,6 +137,8 @@ public class ConsoleUI {
 
         UUID id = UUID.randomUUID();
 
+        // adding coordinates to circle_coordinates table
+
         CircleCoordinates coordinates = new CircleCoordinates();
 
         coordinates.setId(id);
@@ -163,6 +165,8 @@ public class ConsoleUI {
         double area = Math.PI * Math.pow(radius, 2);
 
         double perimeter = Math.PI * 2 * radius;
+
+        // adding fields to circle_data table
 
         data.setId(dataId);
         data.setCoordinates(coordinates);
@@ -194,11 +198,12 @@ public class ConsoleUI {
         System.out.println("Enter circle ID:");
 
         String idFromString = scanner.next();
-
         UUID id;
 
         try {
+
             id = UUID.fromString(idFromString);
+
         } catch (IllegalArgumentException e) {
             System.out.println("Invalid UUID format. Please enter a valid UUID.");
             return;
@@ -213,56 +218,145 @@ public class ConsoleUI {
 
     private void getRadiusOfCircle(){
 
-        System.out.println("GET CIRCLE RADIUS\n");
+        System.out.println("\n~~~ GET CIRCLE RADIUS ~~~\n");
 
         System.out.println("Enter circle ID:");
 
         String idFromString = scanner.next();
-
         UUID id;
 
         try {
+
             id = UUID.fromString(idFromString);
+
         } catch (IllegalArgumentException e) {
+
             System.out.println("Invalid UUID format. Please enter a valid UUID.");
             return;
         }
+
+        double radius = dataService.getRadius(id);
+
+        System.out.println("\nThe radius of the circle is "+ radius +" units.");
 
     }
 
     private void getAreaOfCircle(){
 
-        System.out.println("GET AREA OF CIRCLE\n");
+        System.out.println("\n~~~ GET AREA OF CIRCLE ~~~\n");
+
+        System.out.println("Enter circle ID:");
+
+        String idFromString = scanner.next();
+        UUID id = null;
+
+        try {
+
+            id = UUID.fromString(idFromString);
+
+        } catch (IllegalArgumentException e){
+
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+        }
+
+        double area = dataService.getArea(id);
+
+        System.out.println("\nThe area of the circle is "+ area +" square units.");
 
     }
 
     private void getPerimeterOfCircle(){
 
-        System.out.println("GET PERIMETER OF CIRCLE\n");
+        System.out.println("\n~~~ GET PERIMETER OF CIRCLE ~~~\n");
+
+        System.out.println("Enter circle ID:");
+
+        String idFromString = scanner.next();
+        UUID id = null;
+
+        try {
+
+            id = UUID.fromString(idFromString);
+
+        } catch (IllegalArgumentException e){
+
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+        }
+
+        double perimeter = dataService.getPerimeter(id);
+
+        System.out.println("\nThe perimeter of the circle is "+ perimeter +" units.");
 
     }
 
     private void getEquationOfCircle(){
 
-        System.out.println("GET EQUATION OF CIRCLE\n");
+        System.out.println("\n~~~ GET EQUATION OF CIRCLE \n");
 
+        System.out.println("Enter circle ID:");
+
+        String idFromString = scanner.next();
+        UUID id = null;
+
+        try {
+
+            id = UUID.fromString(idFromString);
+
+        } catch (IllegalArgumentException e){
+
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+        }
+
+        CircleCoordinates coordinates = coordinatesService.getCoordinates(id);
+
+        double radius = dataService.getRadius(id);
+
+        if(coordinates.getCenterX() == 0 && coordinates.getCenterY() == 0) {
+
+            String equation = "The equation of this circle is:\n" +
+                    "x^2 + y^2 = "+ Math.pow(radius, 2);
+
+            System.out.println(equation);
+
+        } else if (coordinates.getCenterX() == 0){
+
+            String equation = "The equation of this circle is:\n" +
+                    "x^2 + (y - " + coordinates.getCenterY() +")^2 = "+ Math.pow(radius, 2);
+
+            System.out.println(equation);
+
+        } else if (coordinates.getCenterY() == 0){
+
+            String equation = "The equation of this circle is:\n" +
+                    "(x - "+ coordinates.getCenterX() +")^2 + y^2 = "+ Math.pow(radius, 2);
+
+            System.out.println(equation);
+
+        } else {
+
+            String equation = "The equation of this circle is:\n" +
+                    "(x - "+ coordinates.getCenterX() +")^2 + (y - " + coordinates.getCenterY() +")^2 = "
+                    + Math.pow(radius, 2);
+
+            System.out.println(equation);
+        }
     }
 
     private void moveCircle(){
 
-        System.out.println("MOVE A CIRCLE\n");
+        System.out.println("\n~~~ MOVE A CIRCLE ~~~\n");
 
     }
 
     private void resizeRadiusOfCircle(){
 
-        System.out.println("RESIZE RADIUS OF CIRCLE\n");
+        System.out.println("\n~~~ RESIZE RADIUS OF CIRCLE ~~~\n");
 
     }
 
     private void deleteCircle(){
 
-        System.out.println("DELETE A CIRCLE\n");
+        System.out.println("\n~~~ DELETE A CIRCLE ~~~\n");
 
     }
 }

@@ -20,6 +20,7 @@ public class CoordinatesRepository {
         Transaction transaction = null;
 
         try {
+
             transaction = session.beginTransaction();
             session.save(coordinates);
             transaction.commit();
@@ -38,11 +39,15 @@ public class CoordinatesRepository {
         Transaction transaction = null;
 
         try {
+
             transaction = session.beginTransaction();
+
             String query = "select c from CircleCoordinates c";
             Query<CircleCoordinates> allCircles = session.createQuery(query, CircleCoordinates.class);
+
             List<CircleCoordinates> result = allCircles.getResultList();
             transaction.commit();
+
             return result;
         } catch (Exception e) {
             if (transaction != null) {
@@ -68,6 +73,7 @@ public class CoordinatesRepository {
                 transaction.commit();
 
             } catch (Exception e) {
+                assert transaction != null;
                 transaction.rollback();
                 e.printStackTrace();
             }
@@ -76,7 +82,6 @@ public class CoordinatesRepository {
         } else {
             throw new RuntimeException("Coordinates not found");
         }
-
 
         return coordinates;
     }

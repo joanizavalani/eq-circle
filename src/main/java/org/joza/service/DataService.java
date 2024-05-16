@@ -1,9 +1,12 @@
 package org.joza.service;
 
 import lombok.AllArgsConstructor;
+
 import org.joza.entities.CircleCoordinates;
 import org.joza.entities.CircleData;
 import org.joza.repository.DataRepository;
+
+import java.util.UUID;
 
 @AllArgsConstructor
 
@@ -19,6 +22,21 @@ public class DataService {
     public void addAllData(CircleData data){
 
         dataRepository.addAllData(data);
-
     }
+
+    public double getRadius(UUID coordinatesId){
+
+        return dataRepository.getRadius(coordinatesId);
+    }
+
+    public double getArea(UUID coordinatesId){
+
+        return dataRepository.getArea(coordinatesId);
+    }
+
+    public double getPerimeter(UUID coordinatesId){
+
+        return dataRepository.getPerimeter(coordinatesId);
+    }
+
 }
