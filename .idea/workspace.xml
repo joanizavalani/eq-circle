@@ -6,10 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="ef46fcfe-16fd-4519-8f44-4c6a031c7c0a" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/joza/ConsoleUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/joza/ConsoleUI.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/joza/repository/CoordinatesRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/joza/repository/CoordinatesRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/joza/repository/DataRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/joza/repository/DataRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/joza/service/DataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/joza/service/DataService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/hibernate.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.properties" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -125,7 +122,8 @@
       <workItem from="1715411909985" duration="6759000" />
       <workItem from="1715701995692" duration="55000" />
       <workItem from="1715728304584" duration="3000" />
-      <workItem from="1715869704095" duration="6213000" />
+      <workItem from="1715869704095" duration="6771000" />
+      <workItem from="1715889529642" duration="408000" />
     </task>
     <servers />
   </component>

@@ -47,6 +47,8 @@ public class DataRepository {
                     .setParameter("coordinatesId", coordinatesId)
                     .uniqueResult();
 
+            transaction.commit();
+
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -74,6 +76,8 @@ public class DataRepository {
                     .setParameter("coordinatesId", coordinatesId)
                     .uniqueResult();
 
+            transaction.commit();
+
         } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
@@ -99,6 +103,8 @@ public class DataRepository {
             data = session.createQuery(query, CircleData.class)
                     .setParameter("coordinatesId", coordinatesId)
                     .uniqueResult();
+
+            transaction.commit();
 
         } catch (Exception e){
 
