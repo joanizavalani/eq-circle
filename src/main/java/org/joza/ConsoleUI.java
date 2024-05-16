@@ -178,6 +178,7 @@ public class ConsoleUI {
 
     }
 
+    // option 2
     private void showAllCircles(){
 
         for(CircleCoordinates coordinates : coordinatesService.getAllCircles()){
@@ -191,6 +192,7 @@ public class ConsoleUI {
 
     }
 
+    // option 3
     private void getCoordinatesOfCircle() {
 
         System.out.println("\n~~~ GET CIRCLE COORDINATES ~~~\n");
@@ -216,6 +218,7 @@ public class ConsoleUI {
 
     }
 
+    // option 4
     private void getRadiusOfCircle(){
 
         System.out.println("\n~~~ GET CIRCLE RADIUS ~~~\n");
@@ -241,6 +244,8 @@ public class ConsoleUI {
 
     }
 
+
+    // option 5
     private void getAreaOfCircle(){
 
         System.out.println("\n~~~ GET AREA OF CIRCLE ~~~\n");
@@ -265,6 +270,7 @@ public class ConsoleUI {
 
     }
 
+    // option 5
     private void getPerimeterOfCircle(){
 
         System.out.println("\n~~~ GET PERIMETER OF CIRCLE ~~~\n");
@@ -289,6 +295,8 @@ public class ConsoleUI {
 
     }
 
+
+    // option 7
     private void getEquationOfCircle(){
 
         System.out.println("\n~~~ GET EQUATION OF CIRCLE \n");
@@ -311,49 +319,123 @@ public class ConsoleUI {
 
         double radius = dataService.getRadius(id);
 
-        if(coordinates.getCenterX() == 0 && coordinates.getCenterY() == 0) {
+        double centerX = coordinates.getCenterX();
+        double centerY = coordinates.getCenterY();
 
-            String equation = "The equation of this circle is:\n" +
-                    "x^2 + y^2 = "+ Math.pow(radius, 2);
+        System.out.println("The equation of this circle is:\n");
 
+        if(centerX == 0 && centerY == 0) {
+
+            String equation = "x^2 + y^2 = "+ Math.pow(radius, 2);
             System.out.println(equation);
 
-        } else if (coordinates.getCenterX() == 0){
+        } else if (centerX == 0){
 
-            String equation = "The equation of this circle is:\n" +
-                    "x^2 + (y - " + coordinates.getCenterY() +")^2 = "+ Math.pow(radius, 2);
+            // these nested if statements exist for the sole purpose of turning double negatives to positives
 
-            System.out.println(equation);
+            if(centerY < 0){
 
-        } else if (coordinates.getCenterY() == 0){
+                centerY = Math.abs(centerY);
 
-            String equation = "The equation of this circle is:\n" +
-                    "(x - "+ coordinates.getCenterX() +")^2 + y^2 = "+ Math.pow(radius, 2);
+                String equation = "x^2 + (y + " + centerY +")^2 = "+ Math.pow(radius, 2);
+                System.out.println(equation);
 
-            System.out.println(equation);
+            } else {
+
+                String equation = "x^2 + (y - " + centerY + ")^2 = " + Math.pow(radius, 2);
+                System.out.println(equation);
+            }
+
+        } else if (centerY == 0){
+
+            if(centerX < 0){
+
+                centerX = Math.abs(centerX);
+
+                String equation = "(x + "+ centerX +")^2 + y^2 = "+ Math.pow(radius, 2);
+                System.out.println(equation);
+
+            } else {
+
+                String equation = "(x - " + centerX + ")^2 + y^2 = " + Math.pow(radius, 2);
+                System.out.println(equation);
+            }
 
         } else {
 
-            String equation = "The equation of this circle is:\n" +
-                    "(x - "+ coordinates.getCenterX() +")^2 + (y - " + coordinates.getCenterY() +")^2 = "
-                    + Math.pow(radius, 2);
+            if(centerX < 0 && centerY < 0){
 
-            System.out.println(equation);
+                centerX = Math.abs(centerX);
+                centerY = Math.abs(centerY);
+
+                String equation = "(x + "+ centerX +")^2 + (y + " + centerY +")^2 = "+ Math.pow(radius, 2);
+                System.out.println(equation);
+
+            } else if(centerX < 0){
+
+                centerX = Math.abs(centerX);
+
+                String equation = "(x + "+ centerX +")^2 + (y - " + centerY +")^2 = "+ Math.pow(radius, 2);
+                System.out.println(equation);
+
+            } else if(centerY < 0){
+
+                centerY = Math.abs(centerY);
+
+                String equation = "(x - "+ centerX +")^2 + (y + " + centerY +")^2 = "+ Math.pow(radius, 2);
+                System.out.println(equation);
+
+            } else {
+                String equation = "(x - "+ centerX +")^2 + (y - " + centerY +")^2 = "+ Math.pow(radius, 2);
+                System.out.println(equation);
+            }
         }
     }
 
+
+    // option 8
     private void moveCircle(){
 
         System.out.println("\n~~~ MOVE A CIRCLE ~~~\n");
 
+        System.out.println("Insert the ID of the circle which center you want to alter: ");
+
+        String idFromString = scanner.next();
+        UUID id = null;
+
+        try {
+
+            id = UUID.fromString(idFromString);
+
+        } catch (IllegalArgumentException e){
+
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+        }
+
+        System.out.println("Insert the coordinates of the vector you want to move the circle with.");
+
+        System.out.println("X coordinate: ");
+        double vectorX = scanner.nextDouble();
+
+        System.out.println("Y coordinate: ");
+        double vectorY = scanner.nextDouble();
+
+        coordinatesService.moveCircle(id, vectorX, vectorY);
+
+        System.out.println("The circle was successfully moved according to the vector " +
+                "("+ vectorX +", "+ vectorY +").");
     }
 
+
+    // option 9
     private void resizeRadiusOfCircle(){
 
         System.out.println("\n~~~ RESIZE RADIUS OF CIRCLE ~~~\n");
 
     }
 
+
+    // option 10
     private void deleteCircle(){
 
         System.out.println("\n~~~ DELETE A CIRCLE ~~~\n");

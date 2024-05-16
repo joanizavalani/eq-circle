@@ -41,7 +41,7 @@ public class DataRepository {
 
             transaction = session.beginTransaction();
 
-            String query = "select d from CircleData d where d.coordinates.id = :coordinatesId";
+            String query = "SELECT d FROM CircleData d WHERE d.coordinates.id = :coordinatesId";
 
             data = session.createQuery(query, CircleData.class)
                     .setParameter("coordinatesId", coordinatesId)
@@ -70,7 +70,7 @@ public class DataRepository {
 
             transaction = session.beginTransaction();
 
-            String query = "select d from CircleData d where d.coordinates.id = :coordinatesId";
+            String query = "SELECT d FROM CircleData d WHERE d.coordinates.id = :coordinatesId";
 
             data = session.createQuery(query, CircleData.class)
                     .setParameter("coordinatesId", coordinatesId)
@@ -98,7 +98,7 @@ public class DataRepository {
 
             transaction = session.beginTransaction();
 
-            String query = "select d from CircleData d where d.coordinates.id = :coordinatesId";
+            String query = "SELECT d FROM CircleData d WHERE d.coordinates.id = :coordinatesId";
 
             data = session.createQuery(query, CircleData.class)
                     .setParameter("coordinatesId", coordinatesId)
@@ -107,7 +107,6 @@ public class DataRepository {
             transaction.commit();
 
         } catch (Exception e){
-
             if (transaction != null){
                 transaction.rollback();
                 e.printStackTrace();

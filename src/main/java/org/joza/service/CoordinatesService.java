@@ -32,4 +32,9 @@ public class CoordinatesService {
 
         return coordinatesRepository.getCoordinates(id);
     }
+
+    public void moveCircle(UUID id, double vectorX, double vectorY){
+
+        coordinatesRepository.moveCircle(id, vectorX, vectorY);
+    }
 }
