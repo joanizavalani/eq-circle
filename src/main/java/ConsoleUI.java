@@ -1,9 +1,7 @@
-package org.joza;
-
-import org.joza.entities.CircleCoordinates;
-import org.joza.entities.CircleData;
-import org.joza.service.CoordinatesService;
-import org.joza.service.DataService;
+import entities.CircleCoordinates;
+import entities.CircleData;
+import service.CoordinatesService;
+import service.DataService;
 
 import java.util.Scanner;
 import java.util.UUID;
@@ -176,6 +174,7 @@ public class ConsoleUI {
 
         dataService.addAllData(data);
 
+        System.out.println("Your circle's ID is: "+ coordinates.getId());
     }
 
     // option 2
@@ -189,7 +188,6 @@ public class ConsoleUI {
         }
 
         System.out.println("\nThese are all the circles saved in the database.\n");
-
     }
 
     // option 3
@@ -215,7 +213,6 @@ public class ConsoleUI {
 
         System.out.println("circle coordinates: center C(" + coordinates.getCenterX() + ", " +
                 coordinates.getCenterY() + "); point P(" + coordinates.getPointX() + ", " + coordinates.getPointY() + ")");
-
     }
 
     // option 4
@@ -241,9 +238,7 @@ public class ConsoleUI {
         double radius = dataService.getRadius(id);
 
         System.out.println("\nThe radius of the circle is "+ radius +" units.");
-
     }
-
 
     // option 5
     private void getAreaOfCircle(){
@@ -267,7 +262,6 @@ public class ConsoleUI {
         double area = dataService.getArea(id);
 
         System.out.println("\nThe area of the circle is "+ area +" square units.");
-
     }
 
     // option 5
@@ -292,9 +286,7 @@ public class ConsoleUI {
         double perimeter = dataService.getPerimeter(id);
 
         System.out.println("\nThe perimeter of the circle is "+ perimeter +" units.");
-
     }
-
 
     // option 7
     private void getEquationOfCircle(){
@@ -392,7 +384,6 @@ public class ConsoleUI {
         }
     }
 
-
     // option 8
     private void moveCircle(){
 
@@ -426,14 +417,33 @@ public class ConsoleUI {
                 "("+ vectorX +", "+ vectorY +").");
     }
 
-
     // option 9
     private void resizeRadiusOfCircle(){
 
-        System.out.println("\n~~~ RESIZE RADIUS OF CIRCLE ~~~\n");
+        System.out.println("\n~~~ RESIZE CIRCLE ~~~\n");
 
+        System.out.println("Insert the ID of the circle you want to resize: ");
+
+        String idFromString = scanner.next();
+        UUID id = null;
+
+        try {
+
+            id = UUID.fromString(idFromString);
+
+        } catch (IllegalArgumentException e){
+
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+        }
+
+        System.out.println("By which factor do you want to multiply the length of the radius?");
+        double factor = scanner.nextDouble();
+
+        dataService.resizeCircle(id, factor);
+        coordinatesService.resizeCircle(id, factor);
+
+        System.out.println("Circle was resized by a factor of "+ factor +".");
     }
-
 
     // option 10
     private void deleteCircle(){

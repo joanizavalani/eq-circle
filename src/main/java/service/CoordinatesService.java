@@ -1,8 +1,9 @@
-package org.joza.service;
+package service;
 
 import lombok.AllArgsConstructor;
-import org.joza.entities.CircleCoordinates;
-import org.joza.repository.CoordinatesRepository;
+
+import entities.CircleCoordinates;
+import repository.CoordinatesRepository;
 
 import java.util.List;
 import java.util.UUID;
@@ -36,5 +37,10 @@ public class CoordinatesService {
     public void moveCircle(UUID id, double vectorX, double vectorY){
 
         coordinatesRepository.moveCircle(id, vectorX, vectorY);
+    }
+
+    public void resizeCircle(UUID id, double factor){
+
+        coordinatesRepository.resizeCircle(id, factor);
     }
 }

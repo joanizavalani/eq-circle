@@ -1,10 +1,11 @@
-package org.joza.repository;
+package repository;
 
 import lombok.AllArgsConstructor;
+
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
-import org.joza.entities.CircleCoordinates;
+import entities.CircleCoordinates;
 
 import java.util.List;
 import java.util.UUID;
@@ -78,7 +79,6 @@ public class CoordinatesRepository {
                 e.printStackTrace();
             }
 
-
         } else {
             throw new RuntimeException("Coordinates not found");
         }
@@ -101,22 +101,57 @@ public class CoordinatesRepository {
                     "WHERE c.id = :id";
 
             Query<?> updateQuery = session.createQuery(query);
+
             updateQuery.setParameter("movedX", movedX);
             updateQuery.setParameter("movedY", movedY);
             updateQuery.setParameter("id", id);
-
             updateQuery.executeUpdate();
 
             transaction.commit();
-
             session.clear(); // this little piece of Hibernate syntax clears the cache of the coordinates table
                              // prior to the change that was just commited
 
         } catch (Exception e){
             if (transaction != null) {
                 transaction.rollback();
+                e.printStackTrace();
             }
         }
+    }
+
+    // method to resize circle
+    public void resizeCircle(UUID id, double factor){
+
+        Transaction transaction = null;
+
+        try {
+
+            transaction = session.beginTransaction();
+
+            String query = "UPDATE CircleCoordinates c " +
+                    "SET c.pointX = c.centerX + :factor * (c.pointX - c.centerX), " +
+                    "c.pointY = c.centerY + :factor * (c.pointY - c.centerY) " +
+                    "WHERE c.id = :id";
+
+            // coordinates of point need to be altered, since the circle expanded by a factor of the variable factor
+
+            Query<?> updateQuery = session.createQuery(query);
+
+            updateQuery.setParameter("id", id);
+            updateQuery.setParameter("factor", factor);
+            updateQuery.executeUpdate();
+
+            transaction.commit();
+            session.clear();
+
+
+        } catch (Exception e){
+            if(transaction != null) {
+                transaction.rollback();
+                e.printStackTrace();
+            }
+        }
+
     }
 }
 
