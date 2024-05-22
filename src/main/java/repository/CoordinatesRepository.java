@@ -144,14 +144,37 @@ public class CoordinatesRepository {
             transaction.commit();
             session.clear();
 
-
         } catch (Exception e){
             if(transaction != null) {
                 transaction.rollback();
                 e.printStackTrace();
             }
         }
+    }
 
+    // method to delete circle
+    public void deleteCircle(UUID id){
+
+        Transaction transaction = null;
+        CircleCoordinates coordinates = null;
+
+        try {
+
+            transaction = session.beginTransaction();
+
+            String query = "DELETE FROM CircleCoordinates c WHERE c.id = :id";
+
+            session.createQuery(query).setParameter("id", id).executeUpdate();
+
+            transaction.commit();
+            session.clear();
+
+        } catch (Exception e){
+            if (transaction != null){
+                transaction.rollback();
+                e.printStackTrace();
+            }
+        }
     }
 }
 

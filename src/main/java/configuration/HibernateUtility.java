@@ -15,9 +15,12 @@ public class HibernateUtility {
     public static SessionFactory getSessionFactory() throws HibernateException {
 
         if(sessionFactory == null){
+
             Configuration configuration = new Configuration();
+
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                     .applySettings(configuration.getProperties()).build();
+
             configuration.addAnnotatedClass(CircleCoordinates.class);
             configuration.addAnnotatedClass(CircleData.class);
 

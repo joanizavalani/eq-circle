@@ -13,11 +13,11 @@ import java.util.UUID;
 public class CoordinatesService {
 
     // takes as parameter the repository, so the consoleUI inputs reach the repository
+
     private final CoordinatesRepository coordinatesRepository;
 
     // all the methods here are used in the consoleUI and connect to
     // the repository (which is responsible for database insertions)
-
 
     public void addCoordinates(CircleCoordinates coordinates){
 
@@ -42,5 +42,10 @@ public class CoordinatesService {
     public void resizeCircle(UUID id, double factor){
 
         coordinatesRepository.resizeCircle(id, factor);
+    }
+
+    public void deleteCircle(UUID id){
+
+        coordinatesRepository.deleteCircle(id);
     }
 }

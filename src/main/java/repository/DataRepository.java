@@ -13,6 +13,7 @@ public class DataRepository {
 
     private final Session session;
 
+    // method to insert area, perimeter and radius to circle_data table
     public void addAllData(CircleData data){
 
         Transaction transaction = null;
@@ -28,10 +29,11 @@ public class DataRepository {
                 transaction.rollback();
             }
             e.printStackTrace();
-
         }
     }
 
+
+    // method to get radius of circle in UI
     public double getRadius(UUID coordinatesId) {
 
         Transaction transaction = null;
@@ -58,9 +60,9 @@ public class DataRepository {
 
         assert data != null;
         return data.getRadius();
-
     }
 
+    // method to get area of circle in UI
     public double getArea(UUID coordinatesId) {
 
         Transaction transaction = null;
@@ -87,9 +89,9 @@ public class DataRepository {
 
         assert data != null;
         return data.getArea();
-
     }
 
+    // method to get perimeter of cicle in UI
     public double getPerimeter(UUID coordinatesId){
 
         Transaction transaction = null;
@@ -116,9 +118,10 @@ public class DataRepository {
 
         assert data != null;
         return data.getPerimeter();
-
     }
 
+
+    // method to resize circle
     public void resizeCircle(UUID coordinatesId, double factor){
 
         Transaction transaction = null;
@@ -149,6 +152,30 @@ public class DataRepository {
                 e.printStackTrace();
             }
         }
+    }
 
+    // method to delete circle
+    public void deleteCircle(UUID coordinatesId){
+
+        Transaction transaction = null;
+        CircleData data = null;
+
+        try {
+
+            transaction = session.beginTransaction();
+
+            String query = "DELETE FROM CircleData d WHERE d.coordinates.id = :coordinatesId";
+
+            session.createQuery(query).setParameter("coordinatesId", coordinatesId).executeUpdate();
+
+            transaction.commit();
+            session.clear();
+
+        } catch (Exception e){
+            if (transaction != null){
+                transaction.rollback();
+                e.printStackTrace();
+            }
+        }
     }
 }

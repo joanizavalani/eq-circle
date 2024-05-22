@@ -8,19 +8,12 @@ import java.util.UUID;
 
 public class ConsoleUI {
 
-    // all methods connecting to runMenu() method are private for there is no need
-    // for them to be accessed outside of this class independently
-
     // fields
-
     private final CoordinatesService coordinatesService;
-
     private final DataService dataService;
-
     private final Scanner scanner;
 
     // constructor
-
     public ConsoleUI(CoordinatesService coordinatesService, DataService dataService){
 
         this.coordinatesService = coordinatesService;
@@ -92,6 +85,9 @@ public class ConsoleUI {
             }
         }
     }
+
+    // all methods connecting to runMenu() method are private for there is no need
+    // for them to be accessed outside of this class independently
 
     private void titleMenu(){
 
@@ -439,6 +435,13 @@ public class ConsoleUI {
         System.out.println("By which factor do you want to multiply the length of the radius?");
         double factor = scanner.nextDouble();
 
+        while (factor <= 0){
+
+            System.out.println("This multiplication factor cannot be negative or zero!");
+            System.out.println("Insert factor of multiplication:");
+            factor = scanner.nextDouble();
+        }
+
         dataService.resizeCircle(id, factor);
         coordinatesService.resizeCircle(id, factor);
 
@@ -450,5 +453,23 @@ public class ConsoleUI {
 
         System.out.println("\n~~~ DELETE A CIRCLE ~~~\n");
 
+        System.out.println("Insert the ID of the circle you want to delete: ");
+
+        String idFromString = scanner.next();
+        UUID id = null;
+
+        try {
+
+            id = UUID.fromString(idFromString);
+
+        } catch (IllegalArgumentException e){
+
+            System.out.println("Invalid UUID format. Please enter a valid UUID.");
+        }
+
+        dataService.deleteCircle(id);
+        coordinatesService.deleteCircle(id);
+
+        System.out.println("Circle was successfully deleted.");
     }
 }

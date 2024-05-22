@@ -43,4 +43,9 @@ public class DataService {
         dataRepository.resizeCircle(coordinatesId, factor);
     }
 
+    public void deleteCircle(UUID coordinatesId){
+
+        dataRepository.deleteCircle(coordinatesId);
+    }
+
 }

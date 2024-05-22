@@ -32,5 +32,4 @@ public class CircleData {
     @OneToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "coordinates_id", nullable = false)
     private CircleCoordinates coordinates;
-
 }
